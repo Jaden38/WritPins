@@ -11,7 +11,6 @@ import {
   IonIcon,
   IonRefresher,
   IonMenuToggle,
-  RadioGroupCustomEvent,
   IonRefresherContent,
   IonMenuButton,
   IonButtons,
