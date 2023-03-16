@@ -15,7 +15,6 @@ import {
   IonRefresherContent,
   IonMenuButton,
   IonButtons,
-  IonRadioGroup,
   IonHeader,
   IonList,
   IonPage,
