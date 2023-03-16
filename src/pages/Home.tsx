@@ -1,8 +1,22 @@
 import MessageListItem from '../components/MessageListItem';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Message, getMessages } from '../data/messages';
+import { pinSharp } from 'ionicons/icons';
 import {
+  IonButton,
   IonContent,
+  IonItem,
+  IonLabel,
+  IonMenu,
+  IonIcon,
+  IonRefresher,
+  IonMenuToggle,
+  IonRadio,
+  RadioGroupCustomEvent,
+  IonRefresherContent,
+  IonMenuButton,
+  IonButtons,
+  IonRadioGroup,
   IonHeader,
   IonList,
   IonPage,
@@ -27,12 +41,36 @@ const Home: React.FC = () => {
     }, 3000);
   };
 
+  const [menuType, setMenuType] = useState('overlay');
+
   return (
-    <IonPage id="home-page">
+    <>
+      <IonMenu contentId="home-page">
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Menu Content</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          <IonMenuToggle>
+            <IonButton>Click to close the menu</IonButton>
+            <IonButton>Mes épingles</IonButton>
+            <IonButton>Thématiques</IonButton>
+            <IonButton>À propos</IonButton>
+          </IonMenuToggle>  
+        </IonContent>
+      </IonMenu>
+      <IonPage id="home-page">
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Inbox</IonTitle>
-        </IonToolbar>
+      <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonMenuButton></IonMenuButton>
+            </IonButtons>
+            <IonIcon icon={pinSharp} />
+            <IonTitle>Menu</IonTitle>
+          </IonToolbar>
+        </IonHeader>
       </IonHeader>
       <IonContent fullscreen>
         <IonRefresher slot="fixed" onIonRefresh={refresh}>
@@ -52,7 +90,9 @@ const Home: React.FC = () => {
         </IonList>
       </IonContent>
     </IonPage>
+    </>
   );
-};
+}
+
 
 export default Home;
