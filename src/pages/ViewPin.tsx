@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Message, getMessage } from '../data/messages';
+import { Pin, getPin } from '../data/pins';
 import {
   IonBackButton,
   IonButtons,
@@ -15,19 +15,19 @@ import {
 } from '@ionic/react';
 import { personCircle } from 'ionicons/icons';
 import { useParams } from 'react-router';
-import './ViewMessage.css';
+import './ViewPin.css';
 
-function ViewMessage() {
-  const [message, setMessage] = useState<Message>();
+function ViewPin() {
+  const [pin, setPin] = useState<Pin>();
   const params = useParams<{ id: string }>();
 
   useIonViewWillEnter(() => {
-    const msg = getMessage(parseInt(params.id, 10));
-    setMessage(msg);
+    const pns = getPin(parseInt(params.id, 10));
+    setPin(pns);
   });
 
   return (
-    <IonPage id="view-message-page">
+    <IonPage id="view-pin-page">
       <IonHeader translucent>
         <IonToolbar>
           <IonButtons slot="start">
@@ -37,34 +37,22 @@ function ViewMessage() {
       </IonHeader>
 
       <IonContent fullscreen>
-        {message ? (
+        {pin ? (
           <>
             <IonItem>
               <IonIcon aria-hidden="true" icon={personCircle} color="primary"></IonIcon>
               <IonLabel className="ion-text-wrap">
                 <h2>
-                  {message.fromName}
+                  {pin.title}
                   <span className="date">
-                    <IonNote>{message.date}</IonNote>
+                    <IonNote>Creation date: {pin.creation_date.toLocaleString()}</IonNote>
                   </span>
                 </h2>
-                <h3>
-                  To: <IonNote>Me</IonNote>
-                </h3>
               </IonLabel>
             </IonItem>
 
             <div className="ion-padding">
-              <h1>{message.subject}</h1>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
+              <h1>{pin.text}</h1>
             </div>
           </>
         ) : (
@@ -75,4 +63,4 @@ function ViewMessage() {
   );
 }
 
-export default ViewMessage;
+export default ViewPin;

@@ -19,6 +19,14 @@ ion-item p {
   white-space: nowrap;
   width: 95%;
 }
+ion-item .tag{
+  float: right;
+  font-size: 12px;
+  font-weight: normal;
+  color: #c9c9ca;
+  display: flex;
+
+}
 
 ion-item .date {
   float: right;
@@ -47,6 +55,7 @@ ion-item ion-note.md {
   border-radius: 50%;
   align-self: start;
   margin: 16px 10px 16px 16px;
+  color: purple;
 }
 
 .dot-unread {
@@ -56,4 +65,12 @@ ion-item ion-note.md {
 ion-footer ion-title {
   font-size: 11px;
   font-weight: normal;
+}
+.message-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chip-container {
+  display: flex;
 }
