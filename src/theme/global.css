@@ -1,0 +1,23 @@
+/* src/theme/global.css */
+.pin-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+  position: relative; /* This helps in positioning the delete button */
+}
+
+.pin-content p {
+  margin: 0;
+}
+
+.delete-button {
+  position: absolute;
+  right: 0; /* Position it to the right end */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
