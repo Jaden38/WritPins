@@ -1,9 +1,10 @@
 // src/components/PinCreationForm.tsx
 import React, { useState } from 'react';
-import { IonButton, IonInput, IonItem, IonLabel, IonList, IonModal, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';
+import { IonButton, IonInput, IonItem, IonLabel, IonList, IonModal, IonHeader, IonToolbar, IonTitle, IonContent, IonChip, IonIcon } from '@ionic/react';
+import { closeCircleOutline } from 'ionicons/icons';
 
 interface PinCreationFormProps {
-  onAddPin: (title: string, text: string) => void;
+  onAddPin: (title: string, text: string, tags: string[]) => void;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -11,30 +12,62 @@ interface PinCreationFormProps {
 const PinCreationForm: React.FC<PinCreationFormProps> = ({ onAddPin, isOpen, onClose }) => {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState('');
 
   const handleAddPin = () => {
-    onAddPin(title, text);
+    onAddPin(title, text, tags);
     setTitle('');
     setText('');
+    setTags([]);
+    setTagInput('');
     onClose();
+  };
+
+  const handleAddTag = () => {
+    if (tagInput.trim()) {
+      setTags([...tags, tagInput.trim()]);
+      setTagInput('');
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    setTags(tags.filter(tag => tag !== tagToRemove));
   };
 
   return (
     <IonModal isOpen={isOpen} onDidDismiss={onClose} className="pin-form">
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Create Pin</IonTitle>
+          <IonTitle className='pin-main-title'>Create Pin</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
         <IonList>
           <IonItem>
-            <IonLabel position="stacked">Title</IonLabel>
+            <IonLabel className='pin-title-form' position="stacked">Title</IonLabel>
             <IonInput value={title} onIonChange={(e) => setTitle(e.detail.value!)} />
           </IonItem>
           <IonItem>
-            <IonLabel position="stacked">Text</IonLabel>
+            <IonLabel className='pin-text-form' position="stacked">Text</IonLabel>
             <IonInput value={text} onIonChange={(e) => setText(e.detail.value!)} />
+          </IonItem>
+          <IonItem>
+            <IonLabel className='pin-tags-form' position="stacked">Tags</IonLabel>
+            <IonInput
+              value={tagInput}
+              onIonChange={(e) => setTagInput(e.detail.value!)}
+              onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
+            />
+            <IonButton slot="end" onClick={handleAddTag}>Add Tag</IonButton>
+          </IonItem>
+          <IonItem>
+            {tags.map((tag, index) => (
+              <IonChip key={index} onClick={() => handleRemoveTag(tag)}>
+                {tag}
+                <IonIcon icon={closeCircleOutline} />
+              </IonChip>
+            ))}
           </IonItem>
         </IonList>
         <IonButton expand="full" onClick={handleAddPin}>

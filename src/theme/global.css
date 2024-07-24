@@ -1,23 +1,57 @@
 /* src/theme/global.css */
+
+.pin-text-form, 
+.pin-title-form,
+.pin-tags-form {
+  font-size: 20px !important;
+}
+
 .pin-content {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   min-height: 48px;
-  position: relative; /* This helps in positioning the delete button */
+  position: relative;
+}
+.pin-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .pin-content p {
   margin: 0;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .delete-button {
   position: absolute;
-  right: 0; /* Position it to the right end */
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
+}
+
+.tag-list {
+  max-width: 95%;
+  padding-top: 10px;
+}
+
+.ion-chip {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 0 8px;
+}
+
+.tag-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1;
+  max-width: 100px;
 }
