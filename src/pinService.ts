@@ -1,5 +1,5 @@
 // src/pinService.ts
-import { collection, addDoc, getDocs, query, where, deleteDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, where, deleteDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 import { Pin } from './interfaces/Pin';
 
@@ -16,6 +16,12 @@ export const getPins = async (userId: string): Promise<Pin[]> => {
     const data = doc.data();
     return { id: doc.id, title: data.title, text: data.text, userId: data.userId, tags: data.tags } as Pin;
   });
+};
+
+export const getPin = async (id: string): Promise<Pin | null> => {
+  const docRef = doc(db, 'pins', id);
+  const docSnap = await getDoc(docRef);
+  return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } as Pin : null;
 };
 
 export const deletePin = async (pinId: string) => {

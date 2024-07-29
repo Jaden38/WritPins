@@ -11,6 +11,7 @@ import { AuthProvider, useAuth } from './AuthContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import PinDetail from './pages/PinDetail';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -62,6 +63,7 @@ const AppRoutes: React.FC = () => {
       {user ? (
         <>
           <Route exact path="/home" component={Home} />
+          <Route exact path="/pins/:id" component={PinDetail} />
           <Redirect from="/" to="/home" />
         </>
       ) : (

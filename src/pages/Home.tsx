@@ -29,6 +29,7 @@ import { useAuth } from '../AuthContext';
 import { trashBinOutline, add, filter, menu, close } from 'ionicons/icons';
 import PinCreationForm from '../components/PinCreationForm';
 import PinSortingMenu from '../components/PinSortingMenu';
+import { useHistory } from 'react-router-dom';
 import '../theme/global.css'; // Import the CSS file here
 
 interface Pin {
@@ -46,6 +47,7 @@ const Home: React.FC = () => {
   const [isSortingModalOpen, setIsSortingModalOpen] = useState(false); // State for sorting modal
   const [searchTags, setSearchTags] = useState<string[]>([]);
   const [isAndSearch, setIsAndSearch] = useState(true); // Default to AND search
+  const history = useHistory();
 
   useEffect(() => {
     if (user) {
@@ -107,6 +109,10 @@ const Home: React.FC = () => {
     setSearchTags(prevTags => prevTags.filter(t => t !== tag));
   };
 
+  const handlePinClick = (id: string) => {
+    history.push(`/pins/${id}`);
+  };
+
   return (
     <IonPage>
       <IonMenu contentId="main-content" side="end">
@@ -149,7 +155,7 @@ const Home: React.FC = () => {
           <IonRow>
             {filteredPins.map((pin) => (
               <IonCol size="12" size-md="6" size-lg="4" key={pin.id}>
-                <IonCard>
+                <IonCard className="pin-card" onClick={() => handlePinClick(pin.id!)}>
                   <IonCardHeader>
                     <IonCardTitle className='pin-title'>{pin.title}</IonCardTitle>
                   </IonCardHeader>
@@ -162,7 +168,10 @@ const Home: React.FC = () => {
                             <IonChip 
                               key={index} 
                               className="ion-chip" 
-                              onClick={() => handleTagClick(tag)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleTagClick(tag);
+                              }}
                             >
                               <IonLabel className="tag-content">{tag}</IonLabel>
                             </IonChip>
@@ -172,7 +181,10 @@ const Home: React.FC = () => {
                     </div>
                   </IonCardContent>
                   <div className="delete-button">
-                    <IonButton fill="clear" onClick={() => handleDeletePin(pin.id!)}>
+                    <IonButton fill="clear" onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeletePin(pin.id!);
+                    }}>
                       <IonIcon icon={trashBinOutline} />
                     </IonButton>
                   </div>
