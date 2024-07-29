@@ -4,10 +4,12 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonChip
 import { RouteComponentProps } from 'react-router-dom';
 import { getPin } from '../pinService';
 import { Pin } from '../interfaces/Pin'; // Ensure this path is correct
+import { useTheme } from '../ThemeContext';
 
 const PinDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const pinId = match.params.id;
   const [pin, setPin] = useState<Pin | null>(null);
+  const { darkMode } = useTheme();
 
   useEffect(() => {
     const fetchPin = async () => {
@@ -17,6 +19,10 @@ const PinDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => 
     fetchPin();
   }, [pinId]);
 
+  useEffect(() => {
+    document.body.classList.toggle('dark', darkMode);
+  }, [darkMode]);
+  
   if (!pin) {
     return <div>Loading...</div>;
   }

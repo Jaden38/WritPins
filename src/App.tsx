@@ -1,17 +1,14 @@
 // src/App.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import {
-  IonApp,
-  IonRouterOutlet,
-  setupIonicReact
-} from '@ionic/react';
+import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { AuthProvider, useAuth } from './AuthContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import PinDetail from './pages/PinDetail';
+import { ThemeProvider, useTheme } from './ThemeContext';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -40,17 +37,24 @@ setupIonicReact();
 const App: React.FC = () => (
   <IonApp>
     <AuthProvider>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <AppRoutes />
-        </IonRouterOutlet>
-      </IonReactRouter>
+      <ThemeProvider>
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <AppRoutes />
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </ThemeProvider>
     </AuthProvider>
   </IonApp>
 );
 
 const AppRoutes: React.FC = () => {
   const { user, loading } = useAuth();
+  const { darkMode } = useTheme();
+
+  useEffect(() => {
+    document.body.classList.toggle('dark', darkMode);
+  }, [darkMode]);
 
   if (loading) {
     return <div>Loading...</div>;

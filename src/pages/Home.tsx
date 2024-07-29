@@ -23,9 +23,11 @@ import {
   IonItem,
   IonLabel,
   IonMenuButton,
+  IonToggle,
 } from '@ionic/react';
 import { addPin, getPins, deletePin } from '../pinService';
 import { useAuth } from '../AuthContext';
+import { useTheme } from '../ThemeContext';
 import { trashBinOutline, add, filter, menu, close } from 'ionicons/icons';
 import PinCreationForm from '../components/PinCreationForm';
 import PinSortingMenu from '../components/PinSortingMenu';
@@ -42,6 +44,7 @@ interface Pin {
 
 const Home: React.FC = () => {
   const { user, logout } = useAuth();
+  const { darkMode, toggleDarkMode } = useTheme();
   const [pins, setPins] = useState<Pin[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSortingModalOpen, setIsSortingModalOpen] = useState(false); // State for sorting modal
@@ -125,6 +128,10 @@ const Home: React.FC = () => {
           <IonList>
             <IonItem>
               <IonLabel>Username: {user?.displayName}</IonLabel>
+            </IonItem>
+            <IonItem>
+              <IonLabel>Dark Mode</IonLabel>
+              <IonToggle checked={darkMode} onIonChange={toggleDarkMode} />
             </IonItem>
           </IonList>
           <IonButton expand="full" onClick={handleLogout} style={{ position: 'absolute', bottom: '0', width: '100%' }}>
