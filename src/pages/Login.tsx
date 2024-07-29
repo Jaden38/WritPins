@@ -39,7 +39,7 @@ const Login: React.FC = () => {
     <IonPage>
       <IonContent className="ion-padding">
         <IonInput
-          placeholder="Email or Username"
+          placeholder="Email"
           value={identifier}
           onIonChange={(e) => setIdentifier(e.detail.value ?? '')}
         />

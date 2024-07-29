@@ -39,20 +39,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (identifier: string, password: string) => {
     let email = identifier;
-
+  
     if (!identifier.includes('@')) {
       const usersRef = collection(db, 'users');
       const q = query(usersRef, where('username', '==', identifier));
       const querySnapshot = await getDocs(q);
-
+  
       if (querySnapshot.empty) {
         throw new Error('No user found with the provided username.');
       }
-
+  
       const userData = querySnapshot.docs[0].data();
       email = userData.email;
     }
-
+  
     await signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -72,7 +72,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const register = async (email: string, password: string, username: string) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-
+  
     await setDoc(doc(db, 'users', user.uid), {
       username: username,
       email: email

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonChip, IonButtons, IonBackButton } from '@ionic/react';
 import { RouteComponentProps } from 'react-router-dom';
 import { getPin } from '../pinService';
-import { Pin } from '../interfaces/Pin'; // Ensure this path is correct
+import { Pin } from '../interfaces/Pin'; 
 import { useTheme } from '../ThemeContext';
 
 const PinDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
@@ -22,7 +22,7 @@ const PinDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => 
   useEffect(() => {
     document.body.classList.toggle('dark', darkMode);
   }, [darkMode]);
-  
+
   if (!pin) {
     return <div>Loading...</div>;
   }
@@ -34,12 +34,13 @@ const PinDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => 
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle>{pin.title}</IonTitle>
+          <IonTitle size='large'>{pin.title}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <h2>{pin.title}</h2>
         <p>{pin.text}</p>
+        <p><strong>Source:</strong> {pin.source}</p>
+        <p><strong>Created At:</strong> {new Date(pin.createdAt).toLocaleString()}</p>
         <div>
           {pin.tags.map((tag, index) => (
             <IonChip key={index}>

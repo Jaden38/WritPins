@@ -334,3 +334,12 @@ body.dark {
     --ion-card-background: #1e1e1e;
   }
 }
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../public/assets/fonts/Roboto-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+
+

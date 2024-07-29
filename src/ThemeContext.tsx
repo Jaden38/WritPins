@@ -1,4 +1,3 @@
-// src/ThemeContext.tsx
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useAuth } from './AuthContext';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -7,6 +6,7 @@ import { db } from './firebaseConfig';
 interface ThemeContextProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
+  themeLoaded: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
@@ -14,6 +14,7 @@ const ThemeContext = createContext<ThemeContextProps>({
   toggleDarkMode: () => {
     // This is a placeholder function and will be overwritten by the ThemeProvider
   },
+  themeLoaded: false,
 });
 
 export const useTheme = () => useContext(ThemeContext);
@@ -25,6 +26,7 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const { user } = useAuth();
   const [darkMode, setDarkMode] = useState(false);
+  const [themeLoaded, setThemeLoaded] = useState(false);
 
   useEffect(() => {
     const fetchTheme = async () => {
@@ -34,11 +36,12 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
         if (docSnapshot.exists()) {
           setDarkMode(docSnapshot.data().darkMode);
         } else {
-          setDarkMode(false); // Reset to default light mode if no data exists
+          setDarkMode(false);
         }
       } else {
-        setDarkMode(false); // Reset to default light mode if no user is logged in
+        setDarkMode(false); 
       }
+      setThemeLoaded(true);
     };
     fetchTheme();
   }, [user]);
@@ -60,7 +63,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   };
 
   return (
-    <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
+    <ThemeContext.Provider value={{ darkMode, toggleDarkMode, themeLoaded }}>
       {children}
     </ThemeContext.Provider>
   );

@@ -4,7 +4,7 @@ import { IonButton, IonInput, IonItem, IonLabel, IonList, IonModal, IonHeader, I
 import { closeCircleOutline } from 'ionicons/icons';
 
 interface PinCreationFormProps {
-  onAddPin: (title: string, text: string, tags: string[]) => void;
+  onAddPin: (title: string, text: string, tags: string[], source: string) => void;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -14,13 +14,15 @@ const PinCreationForm: React.FC<PinCreationFormProps> = ({ onAddPin, isOpen, onC
   const [text, setText] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState('');
+  const [source, setSource] = useState('');
 
   const handleAddPin = () => {
-    onAddPin(title, text, tags);
+    onAddPin(title, text, tags, source);
     setTitle('');
     setText('');
     setTags([]);
     setTagInput('');
+    setSource('');
     onClose();
   };
 
@@ -60,6 +62,10 @@ const PinCreationForm: React.FC<PinCreationFormProps> = ({ onAddPin, isOpen, onC
               onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
             />
             <IonButton slot="end" onClick={handleAddTag}>Add Tag</IonButton>
+          </IonItem>
+          <IonItem>
+            <IonLabel className='pin-source-form' position="stacked">Source</IonLabel>
+            <IonInput value={source} onIonChange={(e) => setSource(e.detail.value!)} />
           </IonItem>
           <IonItem>
             {tags.map((tag, index) => (

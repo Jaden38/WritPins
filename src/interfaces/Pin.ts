@@ -5,4 +5,6 @@ export interface Pin {
   text: string;
   userId: string;
   tags: string[];
+  source: string; 
+  createdAt: string; 
 }

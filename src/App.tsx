@@ -1,7 +1,7 @@
 // src/App.tsx
 import React, { useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonApp, IonContent, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { AuthProvider, useAuth } from './AuthContext';
 import Home from './pages/Home';
@@ -57,8 +57,15 @@ const AppRoutes: React.FC = () => {
   }, [darkMode]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading-container">
+        <div className="lds-dual-ring"></div>
+      </div>
+    );
   }
+  
+  
+  
 
   return (
     <Switch>

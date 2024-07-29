@@ -6,7 +6,11 @@ import { Pin } from './interfaces/Pin';
 const pinsCollection = collection(db, 'pins');
 
 export const addPin = async (pin: Pin) => {
-  await addDoc(pinsCollection, pin);
+  const newPin = {
+    ...pin,
+    createdAt: new Date().toISOString()
+  };
+  await addDoc(pinsCollection, newPin);
 };
 
 export const getPins = async (userId: string): Promise<Pin[]> => {
@@ -14,7 +18,15 @@ export const getPins = async (userId: string): Promise<Pin[]> => {
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map(doc => {
     const data = doc.data();
-    return { id: doc.id, title: data.title, text: data.text, userId: data.userId, tags: data.tags } as Pin;
+    return { 
+      id: doc.id, 
+      title: data.title, 
+      text: data.text, 
+      userId: data.userId, 
+      tags: data.tags,
+      source: data.source,
+      createdAt: data.createdAt
+    } as Pin;
   });
 };
 

@@ -6,6 +6,10 @@
   font-size: 20px !important;
 }
 
+.ion-padding p {
+  font-style: italic;
+}
+
 .pin-content {
   display: flex;
   flex-direction: column;
@@ -27,6 +31,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: default;
+  font-style: italic;
 }
 
 .delete-button {
@@ -66,4 +71,47 @@
 .pin-card {
   transition: background-color 0.3s ease; 
   cursor: pointer; 
+}
+
+
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #121212 ;
+}
+
+.lds-dual-ring,
+.lds-dual-ring:after {
+  box-sizing: border-box;
+  color: #083d8c;
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6.4px solid currentColor;
+  border-color: currentColor transparent currentColor transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

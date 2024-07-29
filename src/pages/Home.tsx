@@ -29,43 +29,49 @@ import { addPin, getPins, deletePin } from '../pinService';
 import { useAuth } from '../AuthContext';
 import { useTheme } from '../ThemeContext';
 import { trashBinOutline, add, filter, menu, close } from 'ionicons/icons';
+import { Pin } from '../interfaces/Pin';
 import PinCreationForm from '../components/PinCreationForm';
 import PinSortingMenu from '../components/PinSortingMenu';
 import { useHistory } from 'react-router-dom';
-import '../theme/global.css'; // Import the CSS file here
-
-interface Pin {
-  id?: string;
-  title: string;
-  text: string;
-  userId: string;
-  tags: string[];
-}
+import '../theme/global.css'; 
+import generateMorePins from '../utils/GeneratePins';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 
 const Home: React.FC = () => {
   const { user, logout } = useAuth();
   const { darkMode, toggleDarkMode } = useTheme();
   const [pins, setPins] = useState<Pin[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSortingModalOpen, setIsSortingModalOpen] = useState(false); // State for sorting modal
+  const [isSortingModalOpen, setIsSortingModalOpen] = useState(false);
   const [searchTags, setSearchTags] = useState<string[]>([]);
-  const [isAndSearch, setIsAndSearch] = useState(true); // Default to AND search
+  const [isAndSearch, setIsAndSearch] = useState(true); 
+  const [username, setUsername] = useState<string | null>(null);
   const history = useHistory();
 
   useEffect(() => {
     if (user) {
       fetchPins(user.uid);
+      fetchUsername(user.uid);
     }
   }, [user]);
+
+  const fetchUsername = async (userId: string) => {
+    const userDoc = doc(db, 'users', userId);
+    const userSnapshot = await getDoc(userDoc);
+    if (userSnapshot.exists()) {
+      setUsername(userSnapshot.data()?.username ?? null);
+    }
+  };
 
   const fetchPins = async (userId: string) => {
     const fetchedPins = await getPins(userId);
     setPins(fetchedPins);
   };
 
-  const handleAddPin = async (title: string, text: string, tags: string[]) => {
+  const handleAddPin = async (title: string, text: string, tags: string[], source: string) => {
     if (user) {
-      const newPin: Pin = { title, text, userId: user.uid, tags };
+      const newPin: Pin = { title, text, userId: user.uid, tags, source, createdAt: new Date().toISOString() };
       await addPin(newPin);
       fetchPins(user.uid);
     }
@@ -86,10 +92,18 @@ const Home: React.FC = () => {
     }
   };
 
+  const handleGenerateMorePins = async () => {
+    if (user && user.uid) {
+      await generateMorePins(user.uid);
+      fetchPins(user.uid);
+    } else {
+      console.error('User is not logged in');
+    }
+  };
+
   // Filter pins based on AND logic
   const filteredPins = searchTags.length ? pins.filter(pin => {
     const pinTags = pin.tags.map(tag => tag.toLowerCase());
-    // AND search: all searchTags must be in pinTags
     return searchTags.every(tag => pinTags.includes(tag));
   }) : pins;
 
@@ -102,9 +116,9 @@ const Home: React.FC = () => {
     setSearchTags(prevTags => {
       const lowerTag = tag.toLowerCase();
       if (prevTags.includes(lowerTag)) {
-        return prevTags.filter(t => t !== lowerTag); // Remove the tag if it already exists
+        return prevTags.filter(t => t !== lowerTag);
       }
-      return [...prevTags, lowerTag]; // Add the tag if it doesn't exist
+      return [...prevTags, lowerTag];
     });
   };
 
@@ -127,16 +141,21 @@ const Home: React.FC = () => {
         <IonContent>
           <IonList>
             <IonItem>
-              <IonLabel>Username: {user?.displayName}</IonLabel>
+              <IonLabel>Username: {username}</IonLabel>
             </IonItem>
             <IonItem>
               <IonLabel>Dark Mode</IonLabel>
               <IonToggle checked={darkMode} onIonChange={toggleDarkMode} />
             </IonItem>
           </IonList>
-          <IonButton expand="full" onClick={handleLogout} style={{ position: 'absolute', bottom: '0', width: '100%' }}>
-            Logout
-          </IonButton>
+          <div style={{ position: 'absolute', bottom: '0', width: '100%' }}>
+            <IonButton expand="full" onClick={handleGenerateMorePins} style={{ marginBottom: '10px' }}>
+              Générer Pins
+            </IonButton>
+            <IonButton expand="full" onClick={handleLogout}>
+              Logout
+            </IonButton>
+          </div>
         </IonContent>
       </IonMenu>
       <IonHeader>
