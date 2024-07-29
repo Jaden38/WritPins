@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { getPin } from '../pinService';
 import { Pin } from '../interfaces/Pin'; 
 import { useTheme } from '../ThemeContext';
+import '../theme/global.css';
 
 const PinDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const pinId = match.params.id;
@@ -24,7 +25,9 @@ const PinDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => 
   }, [darkMode]);
 
   if (!pin) {
-    return <div>Loading...</div>;
+    return <div className="loading-container">
+                <div className="lds-dual-ring"></div>
+            </div>;
   }
 
   return (
@@ -38,9 +41,9 @@ const PinDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => 
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
+        <span className="date-created">Created at : {new Date(pin.createdAt).toLocaleString()}</span>
         <p>{pin.text}</p>
         <p><strong>Source:</strong> {pin.source}</p>
-        <p><strong>Created At:</strong> {new Date(pin.createdAt).toLocaleString()}</p>
         <div>
           {pin.tags.map((tag, index) => (
             <IonChip key={index}>

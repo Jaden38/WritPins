@@ -18,12 +18,8 @@ import {
   IonFab,
   IonFabButton,
   IonChip,
-  IonMenu,
-  IonList,
-  IonItem,
-  IonLabel,
   IonMenuButton,
-  IonToggle,
+  IonLabel,
 } from '@ionic/react';
 import { addPin, getPins, deletePin } from '../pinService';
 import { useAuth } from '../AuthContext';
@@ -35,12 +31,13 @@ import PinSortingMenu from '../components/PinSortingMenu';
 import { useHistory } from 'react-router-dom';
 import '../theme/global.css'; 
 import generateMorePins from '../utils/GeneratePins';
+import SideMenu from '../components/SideMenu';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 const Home: React.FC = () => {
-  const { user, logout } = useAuth();
-  const { darkMode, toggleDarkMode } = useTheme();
+  const { user } = useAuth();
+  const { darkMode } = useTheme();
   const [pins, setPins] = useState<Pin[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSortingModalOpen, setIsSortingModalOpen] = useState(false);
@@ -84,14 +81,6 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error('Logout failed', error);
-    }
-  };
-
   const handleGenerateMorePins = async () => {
     if (user && user.uid) {
       await generateMorePins(user.uid);
@@ -101,7 +90,6 @@ const Home: React.FC = () => {
     }
   };
 
-  // Filter pins based on AND logic
   const filteredPins = searchTags.length ? pins.filter(pin => {
     const pinTags = pin.tags.map(tag => tag.toLowerCase());
     return searchTags.every(tag => pinTags.includes(tag));
@@ -132,32 +120,7 @@ const Home: React.FC = () => {
 
   return (
     <IonPage>
-      <IonMenu contentId="main-content" side="end">
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle>Menu</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
-          <IonList>
-            <IonItem>
-              <IonLabel>Username: {username}</IonLabel>
-            </IonItem>
-            <IonItem>
-              <IonLabel>Dark Mode</IonLabel>
-              <IonToggle checked={darkMode} onIonChange={toggleDarkMode} />
-            </IonItem>
-          </IonList>
-          <div style={{ position: 'absolute', bottom: '0', width: '100%' }}>
-            <IonButton expand="full" onClick={handleGenerateMorePins} style={{ marginBottom: '10px' }}>
-              Générer Pins
-            </IonButton>
-            <IonButton expand="full" onClick={handleLogout}>
-              Logout
-            </IonButton>
-          </div>
-        </IonContent>
-      </IonMenu>
+      <SideMenu handleGenerateMorePins={handleGenerateMorePins} />
       <IonHeader>
         <IonToolbar>
           <IonMenuButton slot="start">

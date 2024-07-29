@@ -64,9 +64,6 @@ const AppRoutes: React.FC = () => {
     );
   }
   
-  
-  
-
   return (
     <Switch>
       <Route exact path="/login" component={Login} />
