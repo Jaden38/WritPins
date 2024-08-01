@@ -21,7 +21,7 @@ import {
   IonMenuButton,
   IonLabel,
 } from '@ionic/react';
-import { addPin, getPins, deletePin } from '../pinService';
+import { addPin, getPins, deletePin } from '../services/pinService';
 import { useAuth } from '../AuthContext';
 import { useTheme } from '../ThemeContext';
 import { trashBinOutline, add, filter, menu, close } from 'ionicons/icons';

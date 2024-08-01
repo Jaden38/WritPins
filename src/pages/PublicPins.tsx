@@ -21,7 +21,7 @@ import {
   IonMenuButton,
   IonLabel,
 } from '@ionic/react';
-import { getPublicPins } from '../pinService';
+import { getPublicPins } from '../services/pinService';
 import { Pin } from '../interfaces/Pin';
 import { useTheme } from '../ThemeContext';
 import '../theme/global.css';

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonChip, IonButtons, IonBackButton, IonButton } from '@ionic/react';
 import { RouteComponentProps } from 'react-router-dom';
-import { getPin, updatePin } from '../pinService'; // Make sure to import updatePin
+import { getPin, updatePin } from '../services/pinService'; // Make sure to import updatePin
 import { Pin } from '../interfaces/Pin'; 
 import { useTheme } from '../ThemeContext';
 import { useAuth } from '../AuthContext'; // Import the useAuth hook

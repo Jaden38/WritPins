@@ -1,7 +1,8 @@
 // src/PrivateRoute.tsx
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import { useAuth } from '.././AuthContext';
+import './theme/global.css';
 
 interface PrivateRouteProps {
   component: React.ComponentType<any>;
@@ -13,7 +14,11 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...re
   const { user, loading } = useAuth();
   
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading-container">
+        <div className="lds-dual-ring"></div>
+      </div>
+    );
   }
 
   return (

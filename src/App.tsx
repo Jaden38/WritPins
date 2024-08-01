@@ -8,7 +8,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import PinDetail from './pages/PinDetail';
-import PublicPins from './pages/PublicPins'; // Import the new page
+import PublicPins from './pages/PublicPins';
 import { ThemeProvider, useTheme } from './ThemeContext';
 
 /* Core CSS required for Ionic components to work properly */

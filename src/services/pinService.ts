@@ -1,7 +1,7 @@
 // src/pinService.ts
 import { collection, addDoc, getDocs, query, where, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from './firebaseConfig';
-import { Pin } from './interfaces/Pin';
+import { db } from '.././firebaseConfig';
+import { Pin } from '.././interfaces/Pin';
 
 const pinsCollection = collection(db, 'pins');
 

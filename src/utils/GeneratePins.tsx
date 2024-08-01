@@ -1,6 +1,6 @@
 // src/utils/generatePins.ts
 import { Pin } from '../interfaces/Pin';
-import { addPin } from '../pinService';
+import { addPin } from '../services/pinService';
 
 const generateMorePins = async (userId: string): Promise<void> => {
   const newPins: Pin[] = [
