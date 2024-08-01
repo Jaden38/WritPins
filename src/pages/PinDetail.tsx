@@ -2,17 +2,17 @@
 import React, { useEffect, useState } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonChip, IonButtons, IonBackButton, IonButton } from '@ionic/react';
 import { RouteComponentProps } from 'react-router-dom';
-import { getPin, updatePin } from '../services/pinService'; // Make sure to import updatePin
+import { getPin, updatePin } from '../services/pinService';
 import { Pin } from '../interfaces/Pin'; 
 import { useTheme } from '../ThemeContext';
-import { useAuth } from '../AuthContext'; // Import the useAuth hook
+import { useAuth } from '../AuthContext';
 import '../theme/global.css';
 
 const PinDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match, location }) => {
   const pinId = match.params.id;
   const [pin, setPin] = useState<Pin | null>(null);
   const { darkMode } = useTheme();
-  const { user } = useAuth(); // Use the useAuth hook to get the current user
+  const { user } = useAuth();
 
   const isFromPublic = new URLSearchParams(location.search).get('fromPublic') === 'true';
 
@@ -31,16 +31,16 @@ const PinDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match, locat
   const handleMakePublic = async () => {
     if (pin) {
       const updatedPin = { ...pin, public: true };
-      await updatePin(updatedPin); // Update the pin to be public
-      setPin(updatedPin); // Update the state
+      await updatePin(updatedPin);
+      setPin(updatedPin);
     }
   };
 
   const handleMakePrivate = async () => {
     if (pin) {
       const updatedPin = { ...pin, public: false };
-      await updatePin(updatedPin); // Update the pin to be private
-      setPin(updatedPin); // Update the state
+      await updatePin(updatedPin);
+      setPin(updatedPin);
     }
   };
 
