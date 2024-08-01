@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import PinDetail from './pages/PinDetail';
+import PublicPins from './pages/PublicPins'; // Import the new page
 import { ThemeProvider, useTheme } from './ThemeContext';
 
 /* Core CSS required for Ionic components to work properly */
@@ -72,6 +73,7 @@ const AppRoutes: React.FC = () => {
         <>
           <Route exact path="/home" component={Home} />
           <Route exact path="/pins/:id" component={PinDetail} />
+          <Route exact path="/public-pins" component={PublicPins} />
           <Redirect from="/" to="/home" />
         </>
       ) : (

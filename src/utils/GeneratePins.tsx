@@ -10,7 +10,9 @@ const generateMorePins = async (userId: string): Promise<void> => {
       userId,
       tags: ["roman", "Camus", "existentialisme", "absurde"],
       source: "Albert Camus",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      public:false
+    
     },
     {
       title: "Cinquante nuances de Grey",
@@ -18,7 +20,9 @@ const generateMorePins = async (userId: string): Promise<void> => {
       userId,
       tags: ["roman", "érotique", "controversé", "consentement"],
       source: "E.L. James",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      public:false
+    
     },
     {
       title: "Sapiens",
@@ -26,7 +30,9 @@ const generateMorePins = async (userId: string): Promise<void> => {
       userId,
       tags: ["histoire", "anthropologie", "sociologie", "humanité"],
       source: "Yuval Noah Harari",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      public:false
+    
     },
     {
       title: "Le Seigneur des Anneaux",
@@ -34,7 +40,9 @@ const generateMorePins = async (userId: string): Promise<void> => {
       userId,
       tags: ["fantasy", "Tolkien", "aventure", "épique"],
       source: "J.R.R. Tolkien",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      public:false
+    
     },
     {
       title: "L'Attrape-cœurs",
@@ -42,7 +50,9 @@ const generateMorePins = async (userId: string): Promise<void> => {
       userId,
       tags: ["roman", "adolescence", "quête de sens", "Salinger"],
       source: "J.D. Salinger",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      public:false
+    
     },
     {
       title: "Le Meilleur des mondes",
@@ -50,7 +60,9 @@ const generateMorePins = async (userId: string): Promise<void> => {
       userId,
       tags: ["dystopie", "Huxley", "technologie", "éthique"],
       source: "Aldous Huxley",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      public:false
+    
     },
     {
       title: "Madame Bovary",
@@ -58,7 +70,9 @@ const generateMorePins = async (userId: string): Promise<void> => {
       userId,
       tags: ["roman", "Flaubert", "critique sociale", "tragédie"],
       source: "Gustave Flaubert",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      public:false
+    
     },
     {
       title: "1984",
@@ -66,7 +80,9 @@ const generateMorePins = async (userId: string): Promise<void> => {
       userId,
       tags: ["dystopie", "Orwell", "totalitarisme", "surveillance"],
       source: "George Orwell",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      public:false
+    
     },
     {
       title: "To Kill a Mockingbird",
@@ -74,7 +90,9 @@ const generateMorePins = async (userId: string): Promise<void> => {
       userId,
       tags: ["roman", "justice", "racisme", "innocence"],
       source: "Harper Lee",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      public:false
+    
     },
     {
       title: "Le Petit Prince",
@@ -82,7 +100,9 @@ const generateMorePins = async (userId: string): Promise<void> => {
       userId,
       tags: ["conte", "philosophie", "Saint-Exupéry", "amitié"],
       source: "Antoine de Saint-Exupéry",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      public:false
+    
     },
   ];
 

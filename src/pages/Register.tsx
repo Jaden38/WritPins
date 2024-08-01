@@ -1,10 +1,12 @@
 // src/pages/Register.tsx
 import React, { useState } from 'react';
-import { IonButton, IonContent, IonInput, IonPage, IonText, IonToast } from '@ionic/react';
+import { IonButton, IonContent, IonInput, IonPage, IonText, IonTitle, IonToast } from '@ionic/react';
 import { useHistory } from 'react-router';
 import { useAuth } from '../AuthContext';
 import { Link } from 'react-router-dom';
 import { FirebaseError } from 'firebase/app';
+import '../theme/global.css';
+
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -46,36 +48,42 @@ const Register: React.FC = () => {
   return (
     <IonPage>
       <IonContent className="ion-padding">
-        <IonInput
-          placeholder="Username"
-          value={username}
-          onIonChange={(e) => setUsername(e.detail.value ?? '')}
-        />
-        <IonInput
-          placeholder="Email"
-          value={email}
-          onIonChange={(e) => setEmail(e.detail.value ?? '')}
-        />
-        <IonInput
-          type="password"
-          placeholder="Password"
-          value={password}
-          onIonChange={(e) => setPassword(e.detail.value ?? '')}
-        />
-        <IonButton expand="full" onClick={handleRegister}>
-          Register
-        </IonButton>
-        <IonText>
-          <p>
-            Already have an account? <Link to="/login">Login</Link>
-          </p>
-        </IonText>
-        <IonToast
-          isOpen={showToast}
-          onDidDismiss={() => setShowToast(false)}
-          message={toastMessage}
-          duration={3000}
-        />
+        <IonTitle className="auth-title">Create Your WritPins Account</IonTitle>
+        <div className="auth-form">
+          <IonInput
+            className='auth-input'
+            placeholder="Username"
+            value={username}
+            onIonChange={(e) => setUsername(e.detail.value ?? '')}
+          />
+          <IonInput
+            className='auth-input'
+            placeholder="Email"
+            value={email}
+            onIonChange={(e) => setEmail(e.detail.value ?? '')}
+          />
+          <IonInput
+            className='auth-input'
+            type="password"
+            placeholder="Password"
+            value={password}
+            onIonChange={(e) => setPassword(e.detail.value ?? '')}
+          />
+          <IonButton expand="full" onClick={handleRegister}>
+            Register
+          </IonButton>
+          <IonText>
+            <p>
+              Already have an account? <Link to="/login">Login</Link>
+            </p>
+          </IonText>
+          <IonToast
+            isOpen={showToast}
+            onDidDismiss={() => setShowToast(false)}
+            message={toastMessage}
+            duration={3000}
+          />
+        </div>
       </IonContent>
     </IonPage>
   );

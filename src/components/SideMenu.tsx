@@ -10,21 +10,20 @@ import {
   IonLabel,
   IonToggle,
   IonButton,
-  IonMenu,
-  IonAvatar,
+  IonMenu
 } from '@ionic/react';
 import { useAuth } from '../AuthContext';
 import { useTheme } from '../ThemeContext';
-import icon from '../assets/icon/icon.png';
-import { text } from 'ionicons/icons';
+import { useHistory } from 'react-router-dom';
 
 interface SideMenuProps {
-  handleGenerateMorePins: () => Promise<void>;
+  handleGenerateMorePins?: () => Promise<void>;
 }
 
 const SideMenu: React.FC<SideMenuProps> = ({ handleGenerateMorePins }) => {
   const { user, logout } = useAuth();
   const { darkMode, toggleDarkMode } = useTheme();
+  const history = useHistory();
 
   const handleLogout = async () => {
     try {
@@ -34,12 +33,20 @@ const SideMenu: React.FC<SideMenuProps> = ({ handleGenerateMorePins }) => {
     }
   };
 
+  const handleNavigateToPublicPins = () => {
+    history.push('/public-pins');
+  };
+
+  const handleNavigateToHome = () => {
+    history.push('/home');
+  }
+
   return (
     <IonMenu contentId="main-content" side="end">
       <IonHeader>
-            <IonToolbar>
-                <IonTitle style={{ textAlign: 'center' }}>{user?.displayName}</IonTitle>
-            </IonToolbar>
+        <IonToolbar>
+          <IonTitle style={{ textAlign: 'center' }}>{user?.displayName}</IonTitle>
+        </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonList>
@@ -47,11 +54,19 @@ const SideMenu: React.FC<SideMenuProps> = ({ handleGenerateMorePins }) => {
             <IonLabel>Dark Mode</IonLabel>
             <IonToggle checked={darkMode} onIonChange={toggleDarkMode} />
           </IonItem>
+          <IonItem button onClick={handleNavigateToHome}>
+            <IonLabel>Home</IonLabel>
+          </IonItem>
+          <IonItem button onClick={handleNavigateToPublicPins}>
+            <IonLabel>Public Pins</IonLabel>
+          </IonItem>
         </IonList>
         <div style={{ position: 'absolute', bottom: '0', width: '100%' }}>
-          <IonButton expand="full" onClick={handleGenerateMorePins} style={{ marginBottom: '10px' }}>
-            Générer Pins
-          </IonButton>
+          {handleGenerateMorePins && (
+            <IonButton expand="full" onClick={handleGenerateMorePins} style={{ marginBottom: '10px' }}>
+              Générer Pins
+            </IonButton>
+          )}
           <IonButton expand="full" onClick={handleLogout}>
             Logout
           </IonButton>

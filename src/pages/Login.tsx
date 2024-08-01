@@ -1,9 +1,10 @@
 // src/pages/Login.tsx
 import React, { useState } from 'react';
-import { IonButton, IonContent, IonInput, IonPage, IonText, IonToast } from '@ionic/react';
+import { IonButton, IonContent, IonInput, IonPage, IonText, IonToast, IonTitle } from '@ionic/react';
 import { useHistory } from 'react-router';
 import { useAuth } from '../AuthContext';
 import { Link } from 'react-router-dom';
+import '../theme/global.css';
 
 const Login: React.FC = () => {
   const [identifier, setIdentifier] = useState<string>('');
@@ -37,35 +38,41 @@ const Login: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent className="ion-padding">
-        <IonInput
-          placeholder="Email"
-          value={identifier}
-          onIonChange={(e) => setIdentifier(e.detail.value ?? '')}
-        />
-        <IonInput
-          type="password"
-          placeholder="Password"
-          value={password}
-          onIonChange={(e) => setPassword(e.detail.value ?? '')}
-        />
-        <IonButton expand="full" onClick={handleLogin}>
-          Login
-        </IonButton>
-        <IonButton expand="full" color="secondary" onClick={handleGoogleSignIn}>
-          Sign in with Google
-        </IonButton>
-        <IonText>
-          <p>
-            Don&apos;t have an account? <Link to="/register">Register</Link>
-          </p>
-        </IonText>
-        <IonToast
-          isOpen={showToast}
-          onDidDismiss={() => setShowToast(false)}
-          message={toastMessage}
-          duration={3000}
-        />
+      <IonContent className="ion-padding auth-content">
+        <IonTitle className="auth-title">Welcome to WritPins</IonTitle>
+        <div className="auth-form">
+          <IonInput
+            className='auth-input'
+            placeholder="Email"
+            value={identifier}
+            onIonChange={(e) => setIdentifier(e.detail.value ?? '')}
+            style={{ marginTop: '20px' }}
+          />
+          <IonInput
+            className='auth-input'
+            type="password"
+            placeholder="Password"
+            value={password}
+            onIonChange={(e) => setPassword(e.detail.value ?? '')}
+          />
+          <IonButton expand="full" onClick={handleLogin}>
+            Login
+          </IonButton>
+          <IonButton expand="full" color="secondary" onClick={handleGoogleSignIn}>
+            Sign in with Google
+          </IonButton>
+          <IonText>
+            <p>
+              Don&apos;t have an account? <Link to="/register">Register</Link>
+            </p>
+          </IonText>
+          <IonToast
+            isOpen={showToast}
+            onDidDismiss={() => setShowToast(false)}
+            message={toastMessage}
+            duration={3000}
+          />
+        </div>
       </IonContent>
     </IonPage>
   );

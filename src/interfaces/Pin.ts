@@ -7,4 +7,5 @@ export interface Pin {
   tags: string[];
   source: string; 
   createdAt: string; 
+  public: boolean;
 }
